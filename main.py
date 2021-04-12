@@ -17,10 +17,18 @@ def get_fact():
     return facts[0].getText()
 
 
+def get_piglatin(fact):
+    response = requests.post('http://hidden-journey-62459.herokuapp.com/piglatinize/',
+                             data = {"input_text":fact})
+    return response.url
+
+
 @app.route('/')
 def home():
-    return "FILL ME!"
-
+    fact = get_fact().strip()
+    body = get_piglatin(fact)
+    #return Response(response=body)
+    return body
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 6787))
